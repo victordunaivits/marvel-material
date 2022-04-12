@@ -1,9 +1,10 @@
 import { Box, Typography } from "@mui/material";
 import { styled } from "@mui/system";
-import Personagem from "../../assets/personagem.jpg";
+import imagemPersonagem from "../../../assets/personagem.jpg";
 import React from "react";
+import Tabela from "../Tabela";
 
-export default function index() {
+export default function Personagem() {
   const ImgPersonagem = styled("img")({
     width: "100%",
     marginTop: 20,
@@ -11,8 +12,14 @@ export default function index() {
   });
 
   return (
-    <Box marginTop={3} width={"100%"} display={'flex'} justifyContent={'center'} >
-      <Box width={'70%'} marginRight={'1rem'}>
+    <Box
+      marginTop={3}
+      width={"100%"}
+      display={"flex"}
+      justifyContent={"center"}
+      marginBottom={4}
+    >
+      <Box width={"70%"} marginRight={"1rem"}>
         <Box>
           <Typography variant="h6" component="h6">
             Personagem Marvel
@@ -28,7 +35,8 @@ export default function index() {
             hero, the angrier the Hulk gets, the stronger the Hulk gets.
           </Typography>
 
-          <ImgPersonagem src={Personagem} />
+          <ImgPersonagem src={imagemPersonagem} />
+          <Tabela />
         </Box>
       </Box>
     </Box>
