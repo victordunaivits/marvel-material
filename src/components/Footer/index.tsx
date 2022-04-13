@@ -9,7 +9,7 @@ export default function Footer() {
         justifyContent: 'center',
         alignItems: 'center',
         color: '#fff',
-        height: '2.5rem',
+        height: '3rem',
         fontSize: '.9rem'
     })
   

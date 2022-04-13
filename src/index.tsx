@@ -3,9 +3,9 @@ import React from "react";
 import ReactDOM from "react-dom";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Navbar from "./components/Navbar/item";
-import Personagem from "./pages/Personagem";
 import Home from "./pages/Home";
-import Footer from "./pages/Personagem/Footer";
+import Footer from "./components/Footer";
+import Personagem from "./pages/Personagem";
 
 ReactDOM.render(
   <React.StrictMode>
@@ -14,10 +14,10 @@ ReactDOM.render(
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<Home />}></Route>
-          <Route path="/personagem" element={<Personagem />}></Route>
+          <Route path="/personagem/:id" element={<Personagem />}></Route>
         </Routes>
       </BrowserRouter>
-      <Footer></Footer>
+      <Footer />
     </CssBaseline>
   </React.StrictMode>,
   document.getElementById("root")

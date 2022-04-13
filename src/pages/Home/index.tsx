@@ -1,21 +1,18 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import { Grid, Typography } from "@mui/material";
+import { Grid, Link, Typography } from "@mui/material";
 import { styled } from "@mui/system";
-import { Md5 } from "ts-md5";
 import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { baseUrl } from "../../data";
 
 export default function Home() {
-  const data: Date = new Date();
-  const ts: number = data.getTime();
-  const publicKey: string = "5ff1f65e5691411fe10ab2373e041485";
-  const privateKey: string = "1f2d5b9a38886d3c869a27f266365d690f897a39";
-  const hash: string = Md5.hashStr(`${ts}${privateKey}${publicKey}`);
-  const baseUrl: string = `http://gateway.marvel.com/v1/public/characters?ts=${ts}&apikey=${publicKey}&hash=${hash}`;
-
+  const navigate = useNavigate();
   const Img = styled("img")({
     width: "100%",
     objectFit: "contain",
     margin: "0",
+    cursor: "pointer",
+    transition: 'ease-in-out .3s'
   });
 
   const [personagens, setPersonagens] = useState<any[]>([]);
@@ -25,11 +22,12 @@ export default function Home() {
       .then((res) => res.json())
       .then((res) => setPersonagens(res.data.results));
   }, []);
+  console.log(personagens);
 
   return (
     <>
       <Grid container width={"90%"} mx={"auto"} spacing={2} margin={2}>
-        {personagens.map((perso) => (
+        {personagens.map((personagem) => (
           <Grid
             item
             xs={6}
@@ -39,11 +37,21 @@ export default function Home() {
             flexDirection={"column"}
             alignItems={"center"}
             height={"100%"}
-            key={perso.id}
+            key={personagem.id}
           >
-            <Img src={perso.thumbnail.path + ".jpg"} alt="img" />
+            <Link onClick={() => navigate(`/personagem/${personagem.id}`)}>
+              <Img
+                src={`${personagem.thumbnail.path}.${personagem.thumbnail.extension}`}
+                alt="img"
+                sx={{
+                  ':hover': {
+                    transform: 'scale(1.05)'
+                  }
+                }}
+              />
+            </Link>
             <Typography component={"p"} mt={1}>
-              {perso.name}
+              {personagem.name}
             </Typography>
           </Grid>
         ))}

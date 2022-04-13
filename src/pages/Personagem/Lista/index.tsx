@@ -1,45 +1,25 @@
-import React from "react";
-import { Grid, List, ListItem, Typography } from "@mui/material";
-import styled from "@emotion/styled";
+import { Container, Typography } from "@mui/material";
+import { styled } from "@mui/material";
+import { ILista } from './ILista'
+import { getComicsID } from "../../../helpers/split";
 
-const comic: String[] = [
-  "FREE COMIC BOOK DAY 2013 1 (2013) #1",
-  "Hulk (2008) #53",
-  "Hulk (2008) #53",
-  "Hulk (2008) #53",
-];
 
-function index() {
-  const ListItens = styled(ListItem)({
-    display: "list-item",
-    listStyle: "circle",
+export default function Lista({ listComics }: any) {
+  const Li = styled("li")({
+    marginTop: "3px",
+    fontSize: ".9rem",
   });
 
   return (
-    <Grid
-      bgcolor={"#a11818"}
-      color={"#fff"}
-      height={"100%"}
-      padding={3}
-      xs={12}
-      sm={12}
-      md={12}
-      marginRight={{
-        xs: "0",
-        sm: "0",
-        md: "7rem",
-      }}
-    >
-      <List>
-        <Typography fontSize={18} component="h4" marginLeft={2}>
-          Lista de Aparições (comics)
-        </Typography>
-        {comic.map((item, index) => (
-          <ListItens key={index}>{item}</ListItens>
-        ))}
-      </List>
-    </Grid>
+    <Container>
+      <Typography component={"h1"} fontSize={15} fontWeight={"500"}>
+        Lista de aparições (comics)
+      </Typography>
+      
+      {listComics?.map((item: ILista) => (
+        <Li key={getComicsID(item.resourceURI)}>{item.name}</Li>
+      ))}
+
+    </Container>
   );
 }
-
-export default index;
