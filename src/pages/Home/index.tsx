@@ -1,61 +1,69 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import { Grid, Link, Typography } from "@mui/material";
-import { styled } from "@mui/system";
+import { CircularProgress, Grid, Typography } from "@mui/material";
 import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
-import { baseUrl } from "../../data";
+import { Link } from "react-router-dom";
+import { MyStack } from "../../components/Loading/item";
+import { ts, hash } from "../../data";
+import { IHome } from "./IHome";
+import { GridContainer, Img, MyCard } from "./styles";
 
-export default function Home() {
-  const navigate = useNavigate();
-  const Img = styled("img")({
-    width: "100%",
-    objectFit: "contain",
-    margin: "0",
-    cursor: "pointer",
-    transition: 'ease-in-out .3s'
-  });
-
-  const [personagens, setPersonagens] = useState<any[]>([]);
+export default function Home({
+  setPersonagemID,
+}: {
+  setPersonagemID: React.Dispatch<React.SetStateAction<number | null>>;
+}) {
+  const [personagens, setPersonagens] = useState<IHome[] | null>(null);
 
   useEffect(() => {
-    fetch(baseUrl)
-      .then((res) => res.json())
-      .then((res) => setPersonagens(res.data.results));
+    setTimeout(() => {
+      fetch(
+        `http://gateway.marvel.com/v1/public/characters?series=22547&ts=${ts}&apikey=${process.env.REACT_APP_PUBLIC_KEY}&hash=${hash}`
+      )
+        .then((res) => res.json())
+        .then((res) => setPersonagens(res.data.results));
+    }, 500);
   }, []);
-  console.log(personagens);
+  // console.log(personagens);
 
   return (
     <>
-      <Grid container width={"90%"} mx={"auto"} spacing={2} margin={2}>
-        {personagens.map((personagem) => (
-          <Grid
-            item
-            xs={6}
-            sm={6}
-            md={3}
-            display={"flex"}
-            flexDirection={"column"}
-            alignItems={"center"}
-            height={"100%"}
-            key={personagem.id}
-          >
-            <Link onClick={() => navigate(`/personagem/${personagem.id}`)}>
-              <Img
-                src={`${personagem.thumbnail.path}.${personagem.thumbnail.extension}`}
-                alt="img"
-                sx={{
-                  ':hover': {
-                    transform: 'scale(1.05)'
-                  }
-                }}
-              />
-            </Link>
-            <Typography component={"p"} mt={1}>
-              {personagem.name}
-            </Typography>
-          </Grid>
-        ))}
-      </Grid>
+      {!personagens ? (
+        <MyStack>
+          <CircularProgress color="error" />
+        </MyStack>
+      ) : (
+        <GridContainer container spacing={2} paddingX={3} marginBottom={3}>
+          {personagens.map((personagem) => (
+            <Grid
+              item
+              xs={6}
+              sm={6}
+              md={3}
+              display={"flex"}
+              flexDirection={"column"}
+              alignItems={"center"}
+              justifyContent={"center"}
+              key={personagem.id}
+              marginTop={2}
+            >
+              <MyCard>
+                <Link
+                  to="/personagem"
+                  onClick={() => setPersonagemID(personagem.id)}
+                >
+                  <Img
+                    src={`${personagem.thumbnail.path}.${personagem.thumbnail.extension}`}
+                    alt="img"
+                  />
+                </Link>
+                <Typography component={"p"} marginY={1} padding={1}>
+                  {personagem.name}
+                </Typography>
+              </MyCard>
+            </Grid>
+          ))}
+        </GridContainer>
+      )}
     </>
   );
 }

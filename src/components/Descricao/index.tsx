@@ -1,13 +1,8 @@
 import { Typography } from "@mui/material";
-import { styled } from "@mui/system";
 import { IDescription } from "./IDescricao";
+import { Imagem } from './styles'
 
 export default function Descricao({ nome, descricao, imagem }: IDescription) {
-  const Imagem = styled("img")({
-    width: "100%",
-    objectFit: "contain",
-  });
-
   return (
     <>
       <Typography component="h6" fontSize={15} fontWeight={"500"}>

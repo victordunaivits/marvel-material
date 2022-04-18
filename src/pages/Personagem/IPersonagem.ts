@@ -4,6 +4,7 @@ export interface IPersonagem {
   thumbnail: Thumb;
   comics: Comic;
   stories: Storie;
+  id: number
 }
 
 type Storie = {

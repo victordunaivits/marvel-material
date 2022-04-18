@@ -1,15 +1,9 @@
 import { Container, Typography } from "@mui/material";
-import { styled } from "@mui/material";
+import { getComicsID } from "../../helpers/split";
 import { ILista } from './ILista'
-import { getComicsID } from "../../../helpers/split";
-
+import { Li } from './styles'
 
 export default function Lista({ listComics }: any) {
-  const Li = styled("li")({
-    marginTop: "3px",
-    fontSize: ".9rem",
-  });
-
   return (
     <Container>
       <Typography component={"h1"} fontSize={15} fontWeight={"500"}>

@@ -1,19 +1,10 @@
-import { AppBar, Box, Link } from "@mui/material";
-import { styled } from "@mui/system";
+import { Box, Link } from "@mui/material";
 import logo from "../../assets/logo-marvel.png";
+import { MyNavbar, LogoMarvel } from './styles'
 
 export default function Navbar() {
-  const LogoMarvel = styled("img")({
-    height: "50px",
-  });
-
-  const Navbar = styled(AppBar)({
-    position: "static",
-    boxShadow: "none",
-  });
-
   return (
-    <Navbar position="static">
+    <MyNavbar position="static">
       <Box
         bgcolor={"#780a0a"}
         height={75}
@@ -25,6 +16,6 @@ export default function Navbar() {
         </Link>
 
       </Box>
-    </Navbar>
+    </MyNavbar>
   );
 }
