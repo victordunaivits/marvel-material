@@ -23,7 +23,6 @@ export default function Home({
         .then((res) => setPersonagens(res.data.results));
     }, 500);
   }, []);
-  // console.log(personagens);
 
   return (
     <>
@@ -56,7 +55,7 @@ export default function Home({
                     alt="img"
                   />
                 </Link>
-                <Typography component={"p"} marginY={1} padding={1}>
+                <Typography component={"p"} marginY={1} padding={1} fontSize={16}>
                   {personagem.name}
                 </Typography>
               </MyCard>

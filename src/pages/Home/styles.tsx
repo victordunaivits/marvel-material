@@ -15,10 +15,16 @@ export const Img = styled("img")({
 
   export const MyCard = styled(Card)({
     display: 'flex',
+    color: '#fff',
     flexDirection: 'column',
     alignItems: 'center',
-    boxShadow: '0px 3px 5px #cccccc',
+    borderBottom: 'solid 3px #780808',
+    transition: 'ease-in-out .1s',
     borderRadius: '3px',
+    background: '#ad1818',
+    '&:hover': {
+      transform: 'scale(1.02)'
+    }
   })
 
   export const GridContainer = styled(Grid)({

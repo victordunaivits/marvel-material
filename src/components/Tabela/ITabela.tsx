@@ -5,5 +5,5 @@ export interface ITabela {
 }
 
 export interface IDescriptionComics {
-    description: string | null
+    description: string | null;
 }

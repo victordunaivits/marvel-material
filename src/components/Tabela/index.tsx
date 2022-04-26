@@ -1,5 +1,6 @@
 import {
   Box,
+  LinearProgress,
   Table,
   TableBody,
   TableContainer,
@@ -10,22 +11,57 @@ import {
 import { ITabela } from "./ITabela";
 import { getComicsID } from "../../helpers/split";
 import { MyTableCell, MyTableCellDescription, MyTableCellName } from "./styles";
-import { Fragment  } from "react";
+import { Fragment } from "react";
+import { ts, hash } from "../../data";
 
 export default function Tabela({
   list,
   setIdComic,
   idComic,
   description,
+  setDescription,
+  setStatus,
+  status
 }: any) {
-  
-  const handleAction = (resourceURI: string) => {
-    if (idComic === resourceURI) {
-      setIdComic("");
-    } else {
-      setIdComic(resourceURI);
+  function apiStorie(idComic: string) {
+    fetch(
+      `https://gateway.marvel.com:443/v1/public/comics/${idComic}?ts=${ts}&apikey=${process.env.REACT_APP_PUBLIC_KEY}&hash=${hash}`
+    )
+      .then((res) => res.json())
+      .then((res) => {
+        setDescription(res.data.results[0]);
+        setIdComic(idComic);
+      });
+  }
+
+  // const handleAction = (resourceURI: string) => {
+  //   if (idComic === resourceURI) {
+  //     setIdComic("");
+  //   } else {
+  //     setIdComic(resourceURI);
+  //     setStatus(status)
+  //     setTimeout(
+  //       () => {
+  //         apiStorie(resourceURI);
+  //       },
+  //       500
+  //     );
+  //   }
+  // };
+
+  const handleAction = async (resourceURI: string) => {
+    await setIdComic(resourceURI)
+    
+    if(idComic !== resourceURI){
+      setStatus(true)
+      setIdComic(resourceURI)
     }
-  };
+    
+      setTimeout(() => {
+        apiStorie(resourceURI)
+      }, 500)
+  }
+
 
   return (
     <Box marginY={3}>
@@ -63,6 +99,8 @@ export default function Tabela({
                       align="center"
                       onClick={() => {
                         handleAction(getComicsID(item.resourceURI));
+                        setDescription('')
+                        setStatus(!status)  
                       }}
                       key={item.name}
                     >
@@ -72,15 +110,17 @@ export default function Tabela({
                       {item.type}
                     </MyTableCell>
                   </TableRow>
-                  {idComic === getComicsID(item.resourceURI) ? (
+
+                  {status && idComic === getComicsID(item.resourceURI) ? (
                     <TableRow>
                       <MyTableCellDescription colSpan={12}>
                         <Typography component={"p"} fontSize={14}>
-                          {description}
+                          {!description ? <LinearProgress color="inherit" /> : description}
                         </Typography>
                       </MyTableCellDescription>
                     </TableRow>
                   ) : null}
+                  
                 </Fragment>
               );
             })}

@@ -15,6 +15,7 @@ export default function App() {
 
   const Main = styled("main")({
     flexGrow: 1,
+    background: "#fff"
   });
 
   return (

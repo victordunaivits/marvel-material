@@ -19,17 +19,19 @@ export default function Personagem({
   const [personagem, setPersonagem] = useState<IPersonagem>();
   const [description, setDescription] = useState<IDescriptionComics>();
   const [idComic, setIdComic] = useState<string>();
-  
-  let navigate = useNavigate();
+  const [status, setStatus] = useState<boolean>(true);
+
+  const navigate = useNavigate();
 
   function apiStorie(idComic: string) {
-    fetch(
-      `https://gateway.marvel.com:443/v1/public/comics/${idComic}?ts=${ts}&apikey=${process.env.REACT_APP_PUBLIC_KEY}&hash=${hash}`
-    )
-      .then((res) => res.json())
-      .then((res) => { setDescription(res.data.results[0])
-        setIdComic(idComic)
-    });
+      fetch(
+        `https://gateway.marvel.com:443/v1/public/comics/${idComic}?ts=${ts}&apikey=${process.env.REACT_APP_PUBLIC_KEY}&hash=${hash}`
+      )
+        .then((res) => res.json())
+        .then((res) => {
+          setDescription(res.data.results[0]);
+          setIdComic(idComic);
+        });
   }
 
   useEffect(() => {
@@ -42,6 +44,7 @@ export default function Personagem({
         )
           .then((res) => res.json())
           .then((res) => {
+            
             const data = res.data.results[0];
             apiStorie(`${getComicsID(data.stories.items[0].resourceURI)}`);
             setPersonagem(res.data.results[0]);
@@ -49,12 +52,6 @@ export default function Personagem({
       }, 500);
     }
   }, []);
-  
-  useEffect(() => {
-    if(idComic){
-      apiStorie(idComic)
-    }
-  }, [idComic]);
 
   return (
     <>
@@ -96,6 +93,9 @@ export default function Personagem({
               setIdComic={setIdComic}
               idComic={idComic}
               description={description?.description}
+              setDescription={setDescription}
+              setStatus={setStatus}
+              status={status}
             />
           </Grid>
 
