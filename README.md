@@ -9,6 +9,9 @@
     <li>Styled Components ✔️</li>
 </ul>
 
+<h2> Imagem do projeto </h2>
+<img src="./src/assets/read.gif"style="height: 400px">
+
 <h2>Pré-requisitos</h2>
 <p>Antes de começar, você vai precisar ter instalado as seguintes ferramentas:</p>
 <ul>
